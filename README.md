@@ -5,7 +5,7 @@ A web app that employees use internally. Employees can access the application an
 How to get my project: (branch master)
 
 ```js
-https://github.com/ngotu2307/Employee-Polls/tree/master/starter
+https://github.com/ngotu2307/Employee-Polls.git
 ```
 
 How to run my project:
