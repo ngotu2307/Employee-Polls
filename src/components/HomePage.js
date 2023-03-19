@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function Leaderboard() {
+function HomePage() {
   return (
     <div className="App">
       <p>Home Page</p>
@@ -9,4 +9,4 @@ function Leaderboard() {
   );
 }
 
-export default Leaderboard;
+export default HomePage;
