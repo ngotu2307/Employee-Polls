@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from "./components/HomePage";
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/auth/Login';
 import ErrorPage from './components/ErrorPage'
 import Dashboard from './components/Dashboard';
@@ -9,28 +8,27 @@ import Leaderboard from './components/Leaderboard';
 import PollPage from './components/PollPage';
 import NewPollPage from './components/NewPollPage';
 import Register from './components/auth/Register';
-import RootLayout from './components/root/Root';
-
-const router = createBrowserRouter([
-  { 
-    path: '/',
-    element: <RootLayout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "error", element: <ErrorPage /> },
-      { path: "register", element: <Register /> },
-      { path: "dashboard", element: <Dashboard /> },
-      { path: "leaderboard", element: <Leaderboard /> },
-      { path: "poll/:id", element: <PollPage /> },
-      { path: "newpoll", element: <NewPollPage /> }
-    ]
-  },
-
-  { path: "/login", element: <Login /> }
-])
+import { useSelector } from 'react-redux';
+import MainNavigation from './components/MainNavigation';
 
 function App() {
-  return <RouterProvider router={router} />
+
+  const isAuth = useSelector(state => state.auth.isAuthen);
+  console.log("isAuth: ", isAuth);
+  return (
+    <>
+    { isAuth && <MainNavigation /> }
+    <Routes>
+        <Route path="/" element={isAuth ? <Navigate to="/dashboard" /> : <Navigate to="/login" /> } />
+        <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
+        <Route path='dashboard' element={isAuth ? <Dashboard /> : <Navigate to="/login" /> } />
+        <Route path='leaderboard' element={isAuth ? <Leaderboard /> : <Navigate to="/login" /> } />
+        <Route path='newpoll' element={isAuth ? <NewPollPage /> : <Navigate to="/login" /> } />
+        <Route path='poll/:id' element={isAuth ? <PollPage /> : <Navigate to="/login" /> } />
+    </Routes>
+    </>
+  )
 }
 
 export default App;
