@@ -12,7 +12,7 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { dispatch, authedUser } = props;
+    const { dispatch } = props;
     
     if (username === "") {
       setErrorMessage("Please enter username");
