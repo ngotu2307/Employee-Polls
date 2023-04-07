@@ -1,59 +1,77 @@
 import { useNavigate } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
 import { useState } from 'react';
 import LoginImages from '../../res/LoginImages';
-import { useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth-slice';
+import { connect } from 'react-redux';
+import { setAuthedUser } from '../../actions/authedUser';
 
-function Login() {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+const Login = (props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] =  useState("");
+  const [username, setUsername] =  useState("");
+  const [password, setPassword] =  useState("");
 
-  const handleSubmit = (event) => {
-    console.log("submit: username: " + username + ", password: " + password);
-    dispatch(authActions.login());
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { dispatch, authedUser } = props;
+    
+    if (username === "") {
+      setErrorMessage("Please enter username");
+      return;
+    }
 
-    localStorage.setItem("session", username);
+    if (password === "") {
+      setErrorMessage("Please enter password");
+      return;
+    }
+    setErrorMessage("");
 
-    event.preventDefault();
-    navigate('/dashboard');
+    const userIds = Object.keys(props.users);
+    const foundId = userIds.find(userId => userId === username);
+    
+    if(foundId !== undefined) {
+      const foundUser = props.users[foundId];
+      console.log("user found: ", foundUser);
+      if(foundUser.password === password) {
+        console.log("Login successfully!");
+        dispatch(setAuthedUser(username));
+        navigate("/dashboard");
+        return;
+      }
+    }
+    
+    setErrorMessage("Wrong credential. Please try again.");
+    return;
   }
-
-  const navigateToDashboard = () => {
-    // when session available => dispatch login action to using isAuthen state update UI
-    dispatch(authActions.login());
-    navigate('/dashboard');
-  }
-
-  const isSessionAvailable = localStorage.getItem('session');
-  console.log("isSessionAvailable: " + isSessionAvailable );
 
   return (
     <div>
-      {isSessionAvailable == null ? (
+      <h2>Employee Polls</h2>
+      <img src={LoginImages.logo} />
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Username</p>
+          <input type="text" onChange={e => setUsername(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          <p>Password</p>
+          <input type="password" onChange={e => setPassword(e.target.value)} />
+        </label>
         <div>
-          <h2>Employee Polls</h2>
-          <Image src={LoginImages.logo} rounded />
-          <h2>Login</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Username</p>
-              <input type="text" onChange={e => setUserName(e.target.value)} />
-            </label>
-            <label>
-              <p>Password</p>
-              <input type="password" onChange={e => setPassword(e.target.value)} />
-            </label>
-            <div>
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-        </div>) : navigateToDashboard()
-    }
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <p className='text-danger'>{errorMessage}</p>
     </div>
   );
 }
 
-export default Login;
+const mapStateToProps = ({ users, authedUser }, prop) => {
+  return {
+    authedUser,
+    users
+  }
+};
+
+export default connect(mapStateToProps)(Login);
