@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import LoginImages from '../../res/LoginImages';
+import LoginImages from '../../res/images';
 
 function Login() {
 

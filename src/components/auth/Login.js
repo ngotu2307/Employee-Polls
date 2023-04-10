@@ -1,19 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import LoginImages from '../../res/LoginImages';
+import images from '../../res/images';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../../actions/authedUser';
 
 const Login = (props) => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] =  useState("");
-  const [username, setUsername] =  useState("");
-  const [password, setPassword] =  useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const setTempUser = (tUsername) => {
+    setErrorMessage("");
+    if (tUsername === "") {
+      setErrorMessage("Please enter username");
+    }
+    setUsername(tUsername);
+  }
+
+  const setTempPassword = (tPassword) => {
+    setErrorMessage("");
+    if (tPassword === "") {
+      setErrorMessage("Please enter password");
+    }
+    setPassword(tPassword);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { dispatch } = props;
-    
+
     if (username === "") {
       setErrorMessage("Please enter username");
       return;
@@ -27,42 +43,53 @@ const Login = (props) => {
 
     const userIds = Object.keys(props.users);
     const foundId = userIds.find(userId => userId === username);
-    
-    if(foundId !== undefined) {
+
+    if (foundId !== undefined) {
       const foundUser = props.users[foundId];
       console.log("user found: ", foundUser);
-      if(foundUser.password === password) {
+      if (foundUser.password === password) {
         console.log("Login successfully!");
         dispatch(setAuthedUser(username));
         navigate("/dashboard");
         return;
       }
     }
-    
+
     setErrorMessage("Wrong credential. Please try again.");
     return;
   }
 
   return (
-    <div>
-      <h2>Employee Polls</h2>
-      <img src={LoginImages.logo} />
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUsername(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
-        </label>
-        <div>
-          <button type="submit">Submit</button>
+    <div className='container mt-4'>
+      <div className='row'>
+        <div className='col-sm-12 d-flex flex-column justify-content-center'>
+          <h2 className='text-center'>Employee Polls</h2>
+          <p />
+          <div className="text-center">
+            <img width="25%" className='rounded' src={images.logo} />
+          </div>
+          <p />
+          <h3 className="text-center" data-testid="login-heading">Log in</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="d-flex flex-column justify-content-center">
+              <div className="form-group text-center">
+                <label htmlFor="userInput">User</label>
+                <input type="text" className="form-control" id="userInput"  placeholder="User" onChange={e => setTempUser(e.target.value)} />
+              </div>
+              <br />
+              <div className="form-group text-center">
+                <label htmlFor="userPassword">Password</label>
+                <input type="password" className="form-control" id="userPassword"  placeholder="Password" onChange={e => setTempPassword(e.target.value)} />
+              </div>
+              <p />
+              <div className='text-center'>
+                <button type="submit" disabled={errorMessage !== ""} className={errorMessage === "" ? "btn btn-primary" : "btn btn-secondary" } >Submit</button>
+              </div>
+            </div>
+          </form>
+          <p className='text-danger'>{errorMessage}</p>
         </div>
-      </form>
-      <p className='text-danger'>{errorMessage}</p>
+      </div>
     </div>
   );
 }

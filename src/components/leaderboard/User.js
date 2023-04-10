@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LoginImages from '../../res/LoginImages';
+import LoginImages from '../../res/images';
 
 const Users = () => {
     return (

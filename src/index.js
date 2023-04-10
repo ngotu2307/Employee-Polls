@@ -11,7 +11,7 @@ import middleware from "./middleware";
 import { PersistGate } from 'redux-persist/integration/react'
 
 // Bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const store = createStore(persistReducer, middleware);

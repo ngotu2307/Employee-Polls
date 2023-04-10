@@ -10,6 +10,7 @@ import Leaderboard from "./leaderboard/Leaderboard";
 import { Routes, Route } from "react-router-dom";
 import LoadingBar from "react-redux-loading-bar";
 import { Navigate } from "react-router-dom";
+import NotFound from "./NotFound";
 
 const App = (props) => {
 
@@ -28,6 +29,8 @@ const App = (props) => {
         <Route path="/poll/:id" element={props.showLogin ? 	<Navigate to="/login" /> : <PollPage />} />
         <Route path="/newpoll" exact element={props.showLogin ? 	<Navigate to="/login" /> : <NewPollPage />} />
         <Route path="/leaderboard" exact element={props.showLogin ? 	<Navigate to="/login" /> : <Leaderboard />} />
+        <Route path="/404" exact element={<NotFound />}/>
+        <Route path="*" exact element={<NotFound />}/>
       </Routes>
     </Fragment>
   )

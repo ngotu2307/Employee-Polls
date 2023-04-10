@@ -5,23 +5,21 @@ import { useNavigate } from 'react-router-dom';
 const ListQuestions = (props) => {
   const navigate = useNavigate();
 
-  const handleClickShow = (qid) => {
-    navigate(`/poll/${qid}`);
-  }
-
   return (
     <div>
-      <div className='border'>
-        <p>{props.title}</p>
-        <div className='d-flex flex-row flex-wrap justify-content-around'>
+      <div className='container border mb-3 p-3'>
+        <h5 className='text-center'>{props.title}</h5>
+        <div className='d-flex flex-row flex-wrap justify-content-start'>
           {
             props.listQuestionId.map(qid => {
               const q = props.questions[qid];
               return (
-                <div className='border p-2' key={q.id}>
-                  <p>{q.author}</p>
-                  <p>{new Date(q.timestamp).toLocaleString()}</p>
-                  <button onClick={() => handleClickShow(qid)}>Shows</button>
+                <div className='d-flex border p-2 flex-column m-3' key={q.id}>
+                  <p className='text-center fw-bold'>{q.author}</p>
+                  <p className='text-black-50'>{new Date(q.timestamp).toLocaleString()}</p>
+                  <Link to={'/poll/' + qid} state={{ questionAuthor: q.author }}>
+                    <button className='btn btn-outline-success col-12'>Show</button>
+                  </Link>
                 </div>
               )
             })
