@@ -73,7 +73,6 @@ const PollPage = (props) => {
         </div>
       </div>
     </div>
-
   );
 }
 

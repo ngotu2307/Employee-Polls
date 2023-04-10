@@ -74,20 +74,20 @@ const Login = (props) => {
             <div className="d-flex flex-column justify-content-center">
               <div className="form-group text-center">
                 <label htmlFor="userInput">User</label>
-                <input type="text" className="form-control" id="userInput"  placeholder="User" onChange={e => setTempUser(e.target.value)} />
+                <input data-testid='username-input' type="text" className="form-control" id="userInput"  placeholder="User" onChange={e => setTempUser(e.target.value)} />
               </div>
               <br />
               <div className="form-group text-center">
                 <label htmlFor="userPassword">Password</label>
-                <input type="password" className="form-control" id="userPassword"  placeholder="Password" onChange={e => setTempPassword(e.target.value)} />
+                <input data-testid='password-input' type="password" className="form-control" id="userPassword"  placeholder="Password" onChange={e => setTempPassword(e.target.value)} />
               </div>
               <p />
               <div className='text-center'>
-                <button type="submit" disabled={errorMessage !== ""} className={errorMessage === "" ? "btn btn-primary" : "btn btn-secondary" } >Submit</button>
+                <button data-testid="submit-button" type="submit" disabled={errorMessage !== ""} className={errorMessage === "" ? "btn btn-primary" : "btn btn-secondary" } >Submit</button>
               </div>
             </div>
           </form>
-          <p className='text-danger'>{errorMessage}</p>
+          <p data-testid="error-message" className='text-danger'>{errorMessage}</p>
         </div>
       </div>
     </div>

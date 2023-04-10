@@ -36,7 +36,7 @@ const Navigation = ({ dispatch, user, authedUser }) => {
             <div className='d-flex justify-content-end'>
               {/*need to check user !== undefined in case of refresh browser*/}
               <img width="10%" src={user !== undefined ? user.avatarURL : undefined} className='rounded-circle' alt="Profile" />
-              <span className='ms-2 fw-bold'>{user !== undefined && user.id}</span>
+              <span data-testid="authedUser-text" className='ms-2 fw-bold'>{authedUser}</span>
             </div>
           </li>
           <li className="list-group-item border-0">
