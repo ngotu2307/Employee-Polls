@@ -12,6 +12,13 @@ const Dashboard = (props) => {
   const [answer, setAnswer] = useState(false);
 
   const location = useLocation();
+  let locationState = location.state;
+  console.log("locationState: ", locationState);
+  if (locationState !== null) {
+    location.state = null;
+    setAnswer(true);
+  }
+
   if (!authedUser) {
     return <Navigate to="/login" state={{ prevPath: location.pathname }} />;
   }
@@ -19,8 +26,6 @@ const Dashboard = (props) => {
   let listQuestion = Object.values(props.questions).sort(
     (a, b) => b.timestamp - a.timestamp
   )
-  console.log("listquestion: ", listQuestion);
-  const questionIds = Object.keys(listQuestion);
 
   listQuestion.filter(q => {
     const opt1Votes = q.optionOne.votes;
@@ -37,10 +42,11 @@ const Dashboard = (props) => {
       <Navigation />
       <ul className="nav nav-tabs mb-3">
         <li className="nav-item">
-          <a className={answer === false ? "nav-link active" : "nav-link"} onClick={() => setAnswer(false)}>Unanswered</a>
+          <a className={(answer === false) ? "nav-link active" : "nav-link"} onClick={() => setAnswer(false)}>Unanswered</a>
         </li>
         <li className="nav-item">
-          <a className={answer === true ? "nav-link active" : "nav-link"} onClick={() => setAnswer(true)}>Answered</a>
+          <a className={(answer === true)
+            ? "nav-link active" : "nav-link"} onClick={() => setAnswer(true)}>Answered</a>
         </li>
       </ul>
 

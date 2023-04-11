@@ -41,7 +41,7 @@ const PollPage = (props) => {
       authedUser: props.authedUser,
       answer: "optionOne"
     }));
-    navigate("/");
+    navigate("/dashboard", { state: { prevPath: location.pathname }});
   }
 
   const handleChooseOptionTwo = () => {
@@ -50,7 +50,7 @@ const PollPage = (props) => {
       authedUser: props.authedUser,
       answer: "optionTwo"
     }));
-    navigate("/");
+    navigate("/dashboard", { state: { prevPath: location.pathname }});
   }
 
   return (
