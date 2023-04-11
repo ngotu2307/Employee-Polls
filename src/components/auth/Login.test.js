@@ -4,18 +4,15 @@ import Login from "./Login";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
 import '@testing-library/jest-dom'
-import { store, persistor } from "../../store";
-import { PersistGate } from 'redux-persist/integration/react'
+import { store } from "../../store";
 
 describe('Login', () => {
     it("should render the component", () => {
         var component = render(
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Router>
-                        <Login />
-                    </Router>
-                </PersistGate>
+                <Router>
+                    <Login />
+                </Router>
             </Provider>
         );
         expect(component).toBeDefined();
@@ -25,11 +22,9 @@ describe('Login', () => {
     it('will have all expected fields', () => {
         var component = render(
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Router>
-                        <Login />
-                    </Router>
-                </PersistGate>
+                <Router>
+                    <Login />
+                </Router>
             </Provider>
         );
 

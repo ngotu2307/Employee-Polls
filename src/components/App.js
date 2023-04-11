@@ -13,7 +13,6 @@ import { Navigate } from "react-router-dom";
 import NotFound from "./NotFound";
 
 const App = (props) => {
-
   useEffect(() => {
     props.dispatch(handleInitialData());
   }, []);
@@ -25,10 +24,10 @@ const App = (props) => {
         <Route path="/" exact element={props.showLogin ? 	<Navigate to="/login" /> : <Navigate to="/dashboard" />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
-        <Route path="/dashboard" exact element={props.showLogin ? 	<Navigate to="/login" /> : <Dashboard />} />
-        <Route path="/poll/:id" element={props.showLogin ? 	<Navigate to="/login" /> : <PollPage />} />
-        <Route path="/newpoll" exact element={props.showLogin ? 	<Navigate to="/login" /> : <NewPollPage />} />
-        <Route path="/leaderboard" exact element={props.showLogin ? 	<Navigate to="/login" /> : <Leaderboard />} />
+        <Route path="/dashboard" exact element={<Dashboard />} />
+        <Route path="/question/:id" element={<PollPage />} />
+        <Route path="/newpoll" exact element={<NewPollPage />} />
+        <Route path="/leaderboard" exact element={<Leaderboard />} />
         <Route path="/404" exact element={<NotFound />}/>
         <Route path="*" exact element={<NotFound />}/>
       </Routes>

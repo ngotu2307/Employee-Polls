@@ -6,7 +6,6 @@ import { setAuthedUser } from '../actions/authedUser';
 const Navigation = ({ dispatch, user, authedUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("Location: ", location.pathname);
 
   const handleClickLogout = (e) => {
     console.log('Logout!');

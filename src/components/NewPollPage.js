@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
 import Navigation from './Navigation';
 import { connect } from "react-redux";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { handerSaveNewQuestion } from '../actions/questions';
 
 const NewPollPage = ({ dispatch, authedUser }) => {
@@ -10,6 +9,11 @@ const NewPollPage = ({ dispatch, authedUser }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [optionOne, setOptionOne] = useState("");
   const [optionTwo, setOptionTwo] = useState("");
+
+  const location = useLocation();
+  if (!authedUser) {
+    return <Navigate to="/login" state={{ prevPath: location.pathname }} />;
+  }
 
   const setTempOptionOne = (tOptionOne) => {
     setErrorMessage("");
@@ -67,7 +71,7 @@ const NewPollPage = ({ dispatch, authedUser }) => {
             </div>
             <p />
             <div className='text-center'>
-              <button type="submit" disabled={errorMessage !== ""} className={errorMessage === "" ? "btn btn-primary" : "btn btn-secondary" } >Submit</button>
+              <button type="submit" disabled={errorMessage !== ""} className={errorMessage === "" ? "btn btn-primary" : "btn btn-secondary"} >Submit</button>
             </div>
           </div>
         </form>

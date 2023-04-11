@@ -21,4 +21,4 @@ const persistConfig = {
 };
    
 
-export default persistReducer(persistConfig, rootReducer);
+export default rootReducer;

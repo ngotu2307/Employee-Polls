@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import images from '../../res/images';
 import { connect } from 'react-redux';
@@ -6,9 +6,12 @@ import { setAuthedUser } from '../../actions/authedUser';
 
 const Login = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const locationState = location.state;
 
   const setTempUser = (tUsername) => {
     setErrorMessage("");
@@ -50,7 +53,7 @@ const Login = (props) => {
       if (foundUser.password === password) {
         console.log("Login successfully!");
         dispatch(setAuthedUser(username));
-        navigate("/dashboard");
+        navigate(locationState !== null ? locationState.prevPath : "/dashboard");
         return;
       }
     }

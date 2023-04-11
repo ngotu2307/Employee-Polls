@@ -1,12 +1,16 @@
 import Navigation from "../Navigation";
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import images from '../../res/images';
+import { Navigate, useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table';
-import Users from './User';
 
-const Leaderboard = ({ users }) => {
+const Leaderboard = (props) => {
+  console.log("Leaderboard props: ", props);
+  const { users, dispatch, authedUser } = props;
+  const location = useLocation();
+  if (!authedUser) {
+    return <Navigate to="/login" state={{ prevPath: location.pathname }} />;
+  }
+
   return (
     <>
       <Navigation />
@@ -32,7 +36,7 @@ const Leaderboard = ({ users }) => {
                         <p className="p-0 m-0 fw-bold">{user !== undefined && user.name}</p>
                         <p className="p-0 m-0 text-black-50">{user !== undefined && user.id}</p>
                       </div>
-                      
+
                       {/* <div className='d-flex flex-column '>
                         <p >{user !== undefined && user.name}</p>
                         <p >{user !== undefined && user.id}</p>
@@ -51,9 +55,10 @@ const Leaderboard = ({ users }) => {
   );
 }
 
-const mapStateToProps = ({ users }) => {
+const mapStateToProps = ({ users, authedUser }) => {
   return {
     users: Object.values(users).sort((a, b) => Object.keys(b.answers).length - Object.keys(a.answers).length),
+    authedUser
   }
 };
 

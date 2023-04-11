@@ -3,20 +3,17 @@ import React from 'react';
 import Navigation from "./Navigation";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
-import { store, persistor } from "../store";
+import { store } from "../store";
 import { setAuthedUser } from "../actions/authedUser";
 import '@testing-library/jest-dom'
-import { PersistGate } from 'redux-persist/integration/react'
 
 describe('Navigation', () => {
     it("should render the component", () => {
         var component = render(
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Router>
-                        <Navigation />
-                    </Router>
-                </PersistGate>
+                <Router>
+                    <Navigation />
+                </Router>
             </Provider>
         );
         expect(component).toBeDefined();
@@ -28,11 +25,9 @@ describe('Navigation', () => {
 
         const component = render(
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Router>
-                        <Navigation />
-                    </Router>
-                </PersistGate>
+                <Router>
+                    <Navigation />
+                </Router>
             </Provider>
         );
         expect(component.getByTestId('authedUser-text')).toHaveTextContent("sarahedo");
