@@ -26,7 +26,7 @@ const App = (props) => {
         <Route path="/register" exact element={<Register />} />
         <Route path="/dashboard" exact element={<Dashboard />} />
         <Route path="/question/:id" element={<PollPage />} />
-        <Route path="/newpoll" exact element={<NewPollPage />} />
+        <Route path="/add" exact element={<NewPollPage />} />
         <Route path="/leaderboard" exact element={<Leaderboard />} />
         <Route path="/404" exact element={<NotFound />}/>
         <Route path="*" exact element={<NotFound />}/>

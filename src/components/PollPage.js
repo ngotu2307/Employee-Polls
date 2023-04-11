@@ -1,22 +1,18 @@
 import { Navigate } from 'react-router-dom';
 import Navigation from './Navigation';
-import LoginImages from '../res/images';
 import { useParams, useLocation } from 'react-router-dom';
 import { connect } from "react-redux";
 import Button from 'react-bootstrap/Button';
 import { handerSaveQuestionAnswer } from '../actions/questions';
-import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 
 const PollPage = (props) => {
-  const navigate = useNavigate();
   let q, questionAuthor;
   const { id } = useParams();
   const location = useLocation();
   q = props.questions[id];
 
   const sumUser = Object.keys(props.users).length;
-  console.log("sumUser: ", sumUser);
 
   if (!props.authedUser) {
     return <Navigate to="/login" state={{ prevPath: location.pathname }} />;
@@ -25,7 +21,12 @@ const PollPage = (props) => {
   // Catch exception when trying to refresh PollPage
   if (q === undefined || location.state === null) return <Navigate to="/404" />
   questionAuthor = location.state.questionAuthor;
-  const isNewQuestion = location.state.isNewQuestion;
+  let isNewQuestion = false;
+  if (location.state !== null) {
+    isNewQuestion = location.state.isNewQuestion;
+    location.state.isNewQuestion = null;
+  }
+  console.log("isNewQuestion: ", isNewQuestion);
 
   const authorInfo = props.users[questionAuthor];
   const optionOneVoted = q.optionOne.votes.includes(props.authedUser);
@@ -41,7 +42,6 @@ const PollPage = (props) => {
       authedUser: props.authedUser,
       answer: "optionOne"
     }));
-    navigate("/dashboard", { state: { prevPath: location.pathname }});
   }
 
   const handleChooseOptionTwo = () => {
@@ -50,7 +50,6 @@ const PollPage = (props) => {
       authedUser: props.authedUser,
       answer: "optionTwo"
     }));
-    navigate("/dashboard", { state: { prevPath: location.pathname }});
   }
 
   return (
@@ -75,7 +74,7 @@ const PollPage = (props) => {
           </div>
           <div className='col-sm-6'>
             <div className='m-2 p-3 d-flex flex-column border'>
-              <p className="text-center" s>{q.optionTwo.text}</p>
+              <p className="text-center">{q.optionTwo.text}</p>
               <Button
                 onClick={() => handleChooseOptionTwo()}
                 variant={(optionTwoVoted || (!optionOneVoted && !optionTwoVoted)) ? "success" : "secondary"}
@@ -93,20 +92,23 @@ const PollPage = (props) => {
                   <tr>
                     <th>Option</th>
                     <th>Your choice</th>
+                    <th>Number of voted people</th>
                     <th>Voted</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>{q.optionOne.text}</td>
-                    <td>{optionOneVoted ? "X" : "O"}</td>
+                    <td>{optionOneVoted === true ? "X" : "O"}</td>
+                    <td>{q.optionOne.votes.length}</td>
                     <td>{calPercentage(q.optionOne.votes.length, sumUser)}%</td>
                   </tr>
                 </tbody>
                 <tbody>
                   <tr>
                     <td>{q.optionTwo.text}</td>
-                    <td>{optionTwoVoted ? "X" : "O"}</td>
+                    <td>{optionTwoVoted === true ? "X" : "O"}</td>
+                    <td>{q.optionTwo.votes.length}</td>
                     <td>{calPercentage(q.optionTwo.votes.length, sumUser)}%</td>
                   </tr>
                 </tbody>

@@ -27,7 +27,7 @@ const Navigation = ({ dispatch, user, authedUser }) => {
             <Link style={{textDecoration: location.pathname==="/leaderboard" ? "underline" : 'none'}} to="/leaderboard">Leaderboard</Link>
           </li>
           <li className="list-group-item border-0">
-            <Link style={{textDecoration: location.pathname==="/newpoll" ? "underline" : 'none'}} to="/newpoll">New</Link>
+            <Link style={{textDecoration: location.pathname==="/add" ? "underline" : 'none'}} to="/add">New</Link>
           </li>
         </ul>
         <ul className='list-group list-group-horizontal'>

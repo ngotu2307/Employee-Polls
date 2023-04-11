@@ -12,12 +12,6 @@ const Dashboard = (props) => {
   const [answer, setAnswer] = useState(false);
 
   const location = useLocation();
-  let locationState = location.state;
-  console.log("locationState: ", locationState);
-  if (locationState !== null) {
-    location.state = null;
-    setAnswer(true);
-  }
 
   if (!authedUser) {
     return <Navigate to="/login" state={{ prevPath: location.pathname }} />;

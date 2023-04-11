@@ -36,7 +36,7 @@ Object {
               class="list-group-item border-0"
             >
               <a
-                href="/newpoll"
+                href="/add"
                 style="text-decoration: none;"
               >
                 New
@@ -113,7 +113,7 @@ Object {
             class="list-group-item border-0"
           >
             <a
-              href="/newpoll"
+              href="/add"
               style="text-decoration: none;"
             >
               New

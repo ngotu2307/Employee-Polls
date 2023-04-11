@@ -57,7 +57,10 @@ const Leaderboard = (props) => {
 
 const mapStateToProps = ({ users, authedUser }) => {
   return {
-    users: Object.values(users).sort((a, b) => Object.keys(b.answers).length - Object.keys(a.answers).length),
+    users: Object.values(users).sort((a, b) => (
+      Object.keys(b.answers).length + Object.keys(b.questions).length)
+        - ( Object.keys(a.answers).length + Object.keys(a.questions).length)
+      ),
     authedUser
   }
 };
